@@ -1,3 +1,4 @@
+import 'package:ffi/ffi.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'dart:ffi' as ffi;
@@ -6,6 +7,9 @@ import 'flutter_cpp_python_platform_interface.dart';
 
 typedef CFunc = ffi.Void Function();
 typedef Func = void Function();
+
+typedef CEvalFunc = ffi.Pointer<Utf8> Function(ffi.Pointer<Utf8>);
+typedef EvalFunc = ffi.Pointer<Utf8> Function(ffi.Pointer<Utf8>);
 
 /// An implementation of [FlutterCppPythonPlatform] that uses method channels.
 class MethodChannelFlutterCppPython extends FlutterCppPythonPlatform {
@@ -27,5 +31,13 @@ class MethodChannelFlutterCppPython extends FlutterCppPythonPlatform {
   Future demoTest() async {
     Func func = _lib.lookup<ffi.NativeFunction<CFunc>>("demo").asFunction();
     func();
+  }
+
+  @override
+  Future<String> eval(String s) async {
+    EvalFunc func =
+        _lib.lookup<ffi.NativeFunction<CEvalFunc>>("eval").asFunction();
+    final result = func(s.toNativeUtf8());
+    return result.toDartString();
   }
 }

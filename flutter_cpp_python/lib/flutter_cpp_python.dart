@@ -8,4 +8,8 @@ class FlutterCppPython {
   Future demoTest() async {
     return FlutterCppPythonPlatform.instance.demoTest();
   }
+
+  Future<String> eval(String s) async {
+    return await FlutterCppPythonPlatform.instance.eval(s);
+  }
 }

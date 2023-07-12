@@ -15,6 +15,12 @@ class MockFlutterCppPythonPlatform
     // TODO: implement demoTest
     throw UnimplementedError();
   }
+
+  @override
+  Future<String> eval(String s) {
+    // TODO: implement eval
+    throw UnimplementedError();
+  }
 }
 
 void main() {

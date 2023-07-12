@@ -30,7 +30,8 @@ list(APPEND PLUGIN_SOURCES
 add_library(${PLUGIN_NAME} SHARED
   "include/flutter_cpp_python/flutter_cpp_python_plugin_c_api.h"
   "flutter_cpp_python_plugin_c_api.cpp"
-  "demo.cpp"
+  "cppmod/demo.cpp"
+  "cppmod/statement_eval.cpp"
   ${PLUGIN_SOURCES}
 )
 
@@ -39,7 +40,6 @@ message(STATUS "build_dir ==> " ${CMAKE_CURRENT_BINARY_DIR})
 get_filename_component(P1 ${CMAKE_CURRENT_BINARY_DIR} DIRECTORY)
 message(STATUS "P1 ==> " ${P1})
 get_filename_component(P2 ${P1} DIRECTORY)
-
 message(STATUS "parent_dir ==> " ${P2})
 
 add_custom_target(copy-runtime-files ALL

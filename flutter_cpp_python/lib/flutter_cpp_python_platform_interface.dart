@@ -28,4 +28,6 @@ abstract class FlutterCppPythonPlatform extends PlatformInterface {
   }
 
   Future demoTest();
+
+  Future<String> eval(String s);
 }

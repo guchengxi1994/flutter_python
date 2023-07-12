@@ -47,6 +47,16 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
+  final TextEditingController controller = TextEditingController();
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  String evalResult = "";
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -61,7 +71,28 @@ class _MyAppState extends State<MyApp> {
                 onPressed: () {
                   _flutterCppPythonPlugin.demoTest();
                 },
-                child: const Text("click"))
+                child: const Text("click")),
+            Row(
+              children: [
+                SizedBox(
+                  width: 500,
+                  child: TextField(
+                    controller: controller,
+                  ),
+                ),
+                ElevatedButton(
+                    onPressed: () async {
+                      final s =
+                          await _flutterCppPythonPlugin.eval(controller.text);
+                      // ignore: use_build_context_synchronously
+                      setState(() {
+                        evalResult = s;
+                      });
+                    },
+                    child: const Text("eval")),
+                Text(evalResult)
+              ],
+            )
           ],
         ),
       ),
