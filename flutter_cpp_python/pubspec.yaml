@@ -1,7 +1,7 @@
 name: flutter_cpp_python
 description: A new Flutter plugin project.
 version: 0.0.1
-homepage:
+homepage: https://github.com/guchengxi1994/flutter_python
 
 environment:
   sdk: '>=3.0.5 <4.0.0'

@@ -34,6 +34,18 @@ add_library(${PLUGIN_NAME} SHARED
   ${PLUGIN_SOURCES}
 )
 
+message(STATUS "build_dir ==> " ${CMAKE_CURRENT_BINARY_DIR})
+
+get_filename_component(P1 ${CMAKE_CURRENT_BINARY_DIR} DIRECTORY)
+message(STATUS "P1 ==> " ${P1})
+get_filename_component(P2 ${P1} DIRECTORY)
+
+message(STATUS "parent_dir ==> " ${P2})
+
+add_custom_target(copy-runtime-files ALL
+  COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/pymod ${P2}/runner/Release/pymod
+)
+
 # Apply a standard set of build settings that are configured in the
 # application-level CMakeLists.txt. This can be removed for plugins that want
 # full control over build settings.
@@ -73,8 +85,8 @@ set(flutter_cpp_python_bundled_libraries
 # # Add the Google Test dependency.
 # include(FetchContent)
 # FetchContent_Declare(
-#   googletest
-#   URL https://github.com/google/googletest/archive/release-1.11.0.zip
+# googletest
+# URL https://github.com/google/googletest/archive/release-1.11.0.zip
 # )
 # # Prevent overriding the parent project's compiler/linker settings
 # set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
@@ -85,8 +97,8 @@ set(flutter_cpp_python_bundled_libraries
 # # The plugin's C API is not very useful for unit testing, so build the sources
 # # directly into the test binary rather than using the DLL.
 # add_executable(${TEST_RUNNER}
-#   test/flutter_cpp_python_plugin_test.cpp
-#   ${PLUGIN_SOURCES}
+# test/flutter_cpp_python_plugin_test.cpp
+# ${PLUGIN_SOURCES}
 # )
 # apply_standard_settings(${TEST_RUNNER})
 # target_include_directories(${TEST_RUNNER} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}")
@@ -94,8 +106,8 @@ set(flutter_cpp_python_bundled_libraries
 # target_link_libraries(${TEST_RUNNER} PRIVATE gtest_main gmock)
 # # flutter_wrapper_plugin has link dependencies on the Flutter DLL.
 # add_custom_command(TARGET ${TEST_RUNNER} POST_BUILD
-#   COMMAND ${CMAKE_COMMAND} -E copy_if_different
-#   "${FLUTTER_LIBRARY}" $<TARGET_FILE_DIR:${TEST_RUNNER}>
+# COMMAND ${CMAKE_COMMAND} -E copy_if_different
+# "${FLUTTER_LIBRARY}" $<TARGET_FILE_DIR:${TEST_RUNNER}>
 # )
 
 # # Enable automatic test discovery.

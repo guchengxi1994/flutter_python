@@ -80,9 +80,9 @@ extern "C"
         PyObject *pFunc = NULL;
         PyObject *pArg = NULL;
         PyRun_SimpleString("import sys");
-        PyRun_SimpleString("sys.path.append('./')"); // 设置python模块，搜寻位置，文件放在.cpp文件一起
+        PyRun_SimpleString("sys.path.append('./pymod')"); // 设置python模块，搜寻位置，文件放在.cpp文件一起
 
-        pModule = PyImport_ImportModule("demo"); // Python文件名: demo.py
+        pModule = PyImport_ImportModule("pymod.demo"); // Python文件名: demo.py
         if (!pModule)
         {
             cout << "py文件导入失败" << endl;
